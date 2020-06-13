@@ -40,7 +40,7 @@ public class UserBatchConfiguration {
 
     @Bean
     public Step step1() {
-        return stepBuilderFactory.get("step1")
+        return stepBuilderFactory.get("Hello step")
                 .tasklet((contribution, chunkContext) -> {
                     LOG.info("Hello world!!!");
                     return null;
@@ -50,7 +50,7 @@ public class UserBatchConfiguration {
 
     @Bean
     public Step step2() {
-        return stepBuilderFactory.get("step2")
+        return stepBuilderFactory.get("By step")
                 .tasklet((contribution, chunkContext) -> {
                     LOG.info("Bye!!!");
                     return null;
@@ -60,7 +60,7 @@ public class UserBatchConfiguration {
 
     @Bean
     public Job job(Step step1, Step step2) {
-        return jobBuilderFactory.get("job1")
+        return jobBuilderFactory.get("Test job")
                 .incrementer(new RunIdIncrementer())
                 .start(step1)
                 .next(step2)
