@@ -1,5 +1,7 @@
 package ru.fivestarter.user.batch;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -16,6 +18,7 @@ import ru.fivestarter.user.controller.UserJson;
 @Configuration
 @EnableBatchProcessing
 public class UserBatchConfiguration {
+    Logger LOG = LoggerFactory.getLogger(UserBatchConfiguration.class);
 
 
     private final JobBuilderFactory jobBuilderFactory;
@@ -39,7 +42,8 @@ public class UserBatchConfiguration {
     public Step step1() {
         return stepBuilderFactory.get("step1")
                 .tasklet((contribution, chunkContext) -> {
-                    System.out.println("Hello world!!!");
+                    //System.out.println("Hello world!!!");
+                    LOG.info("Hello world!!!");
                     return null;
                 })
                 .build();

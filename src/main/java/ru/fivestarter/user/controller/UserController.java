@@ -1,5 +1,7 @@
 package ru.fivestarter.user.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.fivestarter.user.batch.UserBatchConfiguration;
 import ru.fivestarter.user.dao.User;
 import ru.fivestarter.user.dao.UserRepository;
 
@@ -20,6 +23,7 @@ import ru.fivestarter.user.dao.UserRepository;
 @RequestMapping("/api/v1/batch/users")
 public class UserController {
 
+    Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     private final UserRepository userRepository;
     private final Job job;
@@ -35,8 +39,8 @@ public class UserController {
     @GetMapping
     public ResponseEntity<UserJson> getUser() throws org.springframework.batch.core.JobExecutionException {
         JobExecution execution = jobLauncher.run(job, new JobParameters());
-        System.out.println("Job Status : " + execution.getStatus());
-        System.out.println("Job completed");
+        LOG.info("Job Status : " + execution.getStatus());
+        LOG.info("Job completed");
 
         UserJson user = new UserJson();
         user.setFirstName("Mick");
