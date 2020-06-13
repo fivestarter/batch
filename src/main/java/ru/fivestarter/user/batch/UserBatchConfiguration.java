@@ -31,12 +31,10 @@ public class UserBatchConfiguration {
         this.stepBuilderFactory = stepBuilderFactory;
     }
 
-
     @Bean
     public ItemProcessor<UserJson, UserJson> processor() {
         return new UserItemProcessor();
     }
-
 
     @Bean
     public Step step1() {
@@ -63,6 +61,7 @@ public class UserBatchConfiguration {
         return jobBuilderFactory.get("Test job")
                 .incrementer(new RunIdIncrementer())
                 .start(step1)
+                .next(step2)
                 .next(step2)
                 .build();
     }
