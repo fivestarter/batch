@@ -42,7 +42,6 @@ public class UserBatchConfiguration {
     public Step step1() {
         return stepBuilderFactory.get("step1")
                 .tasklet((contribution, chunkContext) -> {
-                    //System.out.println("Hello world!!!");
                     LOG.info("Hello world!!!");
                     return null;
                 })
@@ -50,11 +49,21 @@ public class UserBatchConfiguration {
     }
 
     @Bean
-    public Job job(Step step1) {
+    public Step step2() {
+        return stepBuilderFactory.get("step2")
+                .tasklet((contribution, chunkContext) -> {
+                    LOG.info("Bye!!!");
+                    return null;
+                })
+                .build();
+    }
+
+    @Bean
+    public Job job(Step step1, Step step2) {
         return jobBuilderFactory.get("job1")
                 .incrementer(new RunIdIncrementer())
-                .flow(step1)
-                .end()
+                .start(step1)
+                .next(step2)
                 .build();
     }
 }
